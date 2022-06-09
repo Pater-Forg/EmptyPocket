@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:formats="clr-namespace:EmptyPocket.Formats"
+             x:Class="EmptyPocket.App"
+             >
+    <!--
+        Define global resources and styles here, that apply to all pages in your app.
+    -->
+    <Application.Resources>
+        <ResourceDictionary>
+            <formats:FormatDate x:Key="FormatDate"/>
+            <formats:FormatDate x:Key="FormatFullDate"/>
+            <formats:FormatMoney x:Key="FormatMoney"/>
+            <Color x:Key="Primary">#2196F3</Color>
+            <Style TargetType="Button">
+                <Setter Property="TextColor" Value="White"></Setter>
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Disabled">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="#332196F3" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+            <Style x:Key="HeadStyle" TargetType="Label">
+                <Setter Property="TextColor"
+                    Value="Black"/>
+                <Setter Property="FontSize"
+                    Value="20"/>
+            </Style>
+            <Style x:Key="SubheadStyle" TargetType="Label">
+                <Setter Property="TextColor"
+                    Value="Gray"/>
+                <Setter Property="FontSize"
+                    Value="14"/>
+            </Style>
+            <Style x:Key="SumStyle" TargetType="Label">
+                <Setter Property="TextColor"
+                    Value="Black"/>
+                <Setter Property="FontSize"
+                    Value="20"/>
+                <Setter Property="HorizontalOptions"
+                    Value="End"/>
+            </Style>
+            <Style x:Key="IconStyle" TargetType="Image">
+                <Setter Property="WidthRequest"
+                    Value="32"/>
+                <Setter Property="HeightRequest"
+                    Value="32"/>
+            </Style>
+        </ResourceDictionary>        
+    </Application.Resources>
+</Application>

@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EmptyPocket.Views.TransactionDetailPage"
+             xmlns:local="clr-namespace:EmptyPocket.ViewModels"
+             Title="Детали"
+             >
+    <StackLayout x:DataType="local:TransactionDetailViewModel" Padding="10">
+        <Label Style="{StaticResource HeadStyle}" Text="Время совершения операции"/>
+        <Label Style="{StaticResource SubheadStyle}" Text="{Binding Date, Converter={StaticResource FormatFullDate}}"/>
+        <Label Style="{StaticResource HeadStyle}" Text="Сумма"/>
+        <Label Style="{StaticResource SubheadStyle}" Text="{Binding Sum, Converter={StaticResource FormatMoney}, ConverterParameter='Balance'}"/>
+        <Label Style="{StaticResource HeadStyle}" Text="Категория"/>
+        <Label Style="{StaticResource SubheadStyle}" Text="{Binding Category}"/>
+        <Label Style="{StaticResource HeadStyle}" Text="Счёт"/>
+        <Label Style="{StaticResource SubheadStyle}" Text="{Binding Account}"/>
+        <Label Style="{StaticResource HeadStyle}" Text="Место"/>
+        <Label Style="{StaticResource SubheadStyle}" Text="{Binding Place}"/>
+        <Label Style="{StaticResource HeadStyle}" Text="Комментарий"/>
+        <Label Style="{StaticResource SubheadStyle}" Text="{Binding Comment}"/>
+    </StackLayout>
+</ContentPage>

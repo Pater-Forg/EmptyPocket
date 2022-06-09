@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EmptyPocket.Views.NewTransactionPage"
+             xmlns:local="clr-namespace:EmptyPocket.ViewModels"
+             Title="{Binding TransactionType}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="NameStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="Black"/>
+                <Setter Property="FontSize" Value="17"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Сохранить" Command="{Binding SaveCommand}"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout x:DataType="local:NewTransactionViewModel" Padding="5" Spacing="10">
+            <Entry x:Name="Sum"
+                        Text="{Binding Sum}"
+                        HeightRequest="80"
+                        FontSize="40"
+                        HorizontalOptions="FillAndExpand"
+                        HorizontalTextAlignment="End"/>
+            <Grid ColumnDefinitions="0.8*,*" Padding="10,0,0,0">
+                <Label Grid.Row="0"
+                       Grid.Column="0"
+                       Style="{StaticResource NameStyle}"
+                       Text="Категория:"/>
+                <Picker Grid.Row="0"
+                        Grid.Column="1"
+                        x:Name="catPicker" 
+                        ItemsSource="{Binding categories}"
+                        SelectedItem="{Binding Category}"/>
+
+                <Label Grid.Row="1"
+                       Grid.Column="0"
+                       Style="{StaticResource NameStyle}"
+                       Text="Счёт:"/>
+                <Picker Grid.Row="1"
+                        Grid.Column="1"
+                        x:Name="walPicker" 
+                        ItemsSource="{Binding wallets}"
+                        SelectedItem="{Binding Account}"/>
+                
+                <Label Grid.Row="2"
+                       Grid.Column="0"
+                       Style="{StaticResource NameStyle}"
+                       Text="Место платежа:"/>
+                <Entry Grid.Row="2"
+                       Grid.Column="1"
+                       x:Name="Place"
+                       Text="{Binding Place}"
+                       HeightRequest="50"/>
+            </Grid>
+            <Label Padding="10,0,0,0" Style="{StaticResource NameStyle}" Text="Комментарий:"/>
+            <Editor x:Name="Comment"
+                    Text="{Binding Comment}"
+                    HeightRequest="70"/>
+            
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

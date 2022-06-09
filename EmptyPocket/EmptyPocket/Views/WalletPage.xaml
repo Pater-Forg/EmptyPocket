@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EmptyPocket.Views.WalletPage"
+             xmlns:local="clr-namespace:EmptyPocket.ViewModels" 
+             xmlns:model="clr-namespace:EmptyPocket.Models"
+             xmlns:formats="clr-namespace:EmptyPocket.Formats"
+             Title="Счета">
+    <RefreshView x:DataType="local:WalletViewModel" Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+        <CollectionView x:Name="ItemsListView"
+                        ItemsSource="{Binding Items}"
+                        SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid x:DataType="model:Wallet" ColumnDefinitions="auto,auto,*" Padding="5,10,5,4">
+                        <Image Style="{StaticResource IconStyle}" Source="icon_about.png"/>
+                        <Label Grid.Column="1" Style="{StaticResource HeadStyle}" Text="{Binding Name}"/>
+                        <Label Grid.Column="2" Style="{StaticResource SumStyle}" Text="{Binding Sum, Converter={StaticResource FormatMoney}, ConverterParameter='Balance'}"/>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </RefreshView>
+</ContentPage>
