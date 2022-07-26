@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace EmptyPocket.Services
 {
-    public interface IDataStore<T>
+    public interface IDataStore<Type>
     {
-        Task<int> AddItemAsync(T item);
-        Task<int> UpdateItemAsync(T item);
-        Task<int> DeleteItemAsync(T item);
-        Task<T> GetItemAsync(int id);
-        Task<List<T>> GetItemsAsync(bool forceRefresh = false);
+        Task<IEnumerable<Type>> GetAsync(bool forceRefresh = false);
     }
 }

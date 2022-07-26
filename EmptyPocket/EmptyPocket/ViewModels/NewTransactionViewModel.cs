@@ -32,7 +32,7 @@ namespace EmptyPocket.ViewModels
         public async void LoadWallets()
         {
             wallets.Clear();
-            var items = await WalDataStore.GetItemsAsync();
+            var items = await WalDataStore.GetAsync();
             foreach (var item in items)
             {
                 wallets.Add(item.Name);
@@ -42,7 +42,7 @@ namespace EmptyPocket.ViewModels
         public async void LoadCategories()
         {
             categories.Clear();
-            var items = await App.Database.database.Table<Category>().Where(x => x.Type == TransactionType).ToListAsync();
+            var items = await CatDataStore.GetAsync();
             foreach (var item in items)
             {
                 categories.Add(item.Name);
@@ -145,7 +145,7 @@ namespace EmptyPocket.ViewModels
                 Date = DateTime.UtcNow.Date
             };
 
-            await TransDataStore.AddItemAsync(newItem);
+            await TransDataStore.UpsertAsync(newItem);
 
             await UpdateCategory(Category);
             await UpdateWallet(Account);
@@ -154,30 +154,21 @@ namespace EmptyPocket.ViewModels
             await Shell.Current.GoToAsync("..");
         }
 
-        private async Task<bool> UpdateCategory(string category)
+        private async Task<bool> UpdateCategory(string categoryName)
         {
-            //Category _category = await CatDataStore.GetItemAsync(category);
-            //_category.Sum += Sum;
-            //_category.Number += 1;
-            //await CatDataStore.UpdateItemAsync(_category);
-
-            var _category = await App.Database.database.GetAsync<Category>(x => x.Name == category);
+            var _category = await CatDataStore.GetByNameAsync(categoryName);
             _category.Sum += Sum;
             _category.Number += 1;
-            await CatDataStore.UpdateItemAsync(_category);
+            await CatDataStore.UpsertAsync(_category);
 
             return true;
         }
 
-        private async Task<bool> UpdateWallet(string wallet)
+        private async Task<bool> UpdateWallet(string walletName)
         {
-            //Wallet _wallet = await WalDataStore.GetItemAsync(wallet);
-            //_wallet.Sum += Sum;
-            //await WalDataStore.UpdateItemAsync(_wallet);
-
-            var _wallet = await App.Database.database.GetAsync<Wallet>(x => x.Name == wallet);
+            var _wallet = await WalDataStore.GetByNameAsync(walletName);
             _wallet.Sum += Sum;
-            await WalDataStore.UpdateItemAsync(_wallet);
+            await WalDataStore.UpsertAsync(_wallet);
 
             return true;
         }

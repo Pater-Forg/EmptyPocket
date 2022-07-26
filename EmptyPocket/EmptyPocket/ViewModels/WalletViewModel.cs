@@ -34,7 +34,7 @@ namespace EmptyPocket.ViewModels
             try
             {
                 Items.Clear();
-                var items = await WalDataStore.GetItemsAsync(true);
+                var items = await WalDataStore.GetAsync(true);
                 foreach (var item in items)
                 {
                     Items.Add(item);
