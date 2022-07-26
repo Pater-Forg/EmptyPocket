@@ -60,7 +60,7 @@ namespace EmptyPocket.ViewModels
             try
             {
                 Categories.Clear();
-                var items = await App.Database.database.Table<Category>().Where(x => x.Type != "Доход").ToListAsync();
+                var items = await CatDataStore.GetByTypeAsync("Расход");
                 foreach (var item in items)
                 {
                     Categories.Add(item);

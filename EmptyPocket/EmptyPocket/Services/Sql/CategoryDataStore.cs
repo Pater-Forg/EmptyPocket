@@ -7,7 +7,7 @@ using EmptyPocket.Models;
 
 namespace EmptyPocket.Services
 {
-    public class CategoryDataStore : IDataStore<Category>
+    public class CategoryDataStore : ICategoriesStore
     {
         public List<Category> items;
 
@@ -52,44 +52,44 @@ namespace EmptyPocket.Services
             App.Database.database.InsertAllAsync(items);
         }
 
-
-        public async Task<int> AddItemAsync(Category item)
+        public async Task UpsertAsync(Category category)
         {
-            //items.Add(item);
-
-            //return await Task.FromResult(true);
-            return await App.Database.database.InsertAsync(item);
+            await App.Database.database.InsertOrReplaceAsync(category);
         }
 
-        public async Task<int> UpdateItemAsync(Category item)
-        {
-            //var oldItem = items.Where((Category arg) => arg.Id == item.Id).FirstOrDefault();
-            //items.Remove(oldItem);
-            //items.Add(item);
+        //public async Task<int> AddItemAsync(Category item)
+        //{
+        //    return await App.Database.database.InsertAsync(item);
+        //}
 
-            //return await Task.FromResult(true);
-            return await App.Database.database.UpdateAsync(item);
+        //public async Task<int> UpdateItemAsync(Category item)
+        //{
+        //    return await App.Database.database.UpdateAsync(item);
+        //}
+
+        public async Task DeleteAsync(int id)
+        {
+            await App.Database.database.DeleteAsync<Category>(id);
         }
 
-        public async Task<int> DeleteItemAsync(Category item)
+        public async Task<Category> GetAsync(int id)
         {
-            //var oldItem = items.Where((Category arg) => arg.Id == id).FirstOrDefault();
-            //items.Remove(oldItem);
-
-            //return await Task.FromResult(true);
-            return await App.Database.database.DeleteAsync(item);
-        }
-
-        public async Task<Category> GetItemAsync(int id)
-        {
-            // return await Task.FromResult(items.FirstOrDefault(s => s.Id == id));
             return await App.Database.database.Table<Category>().Where(i => i.Id == id).FirstOrDefaultAsync();
         }
 
-        public async Task<List<Category>> GetItemsAsync(bool forceRefresh = false)
+        public async Task<IEnumerable<Category>> GetAsync(bool forceRefresh = false)
         {
-            // return await Task.FromResult(items);
             return await App.Database.database.Table<Category>().ToListAsync();
+        }
+
+        public async Task<IEnumerable<Category>> GetByTypeAsync(string type)
+        {
+            return await App.Database.database.Table<Category>().Where(x => x.Type == type).ToListAsync();
+        }
+
+        public async Task<Category> GetByNameAsync(string name)
+        {
+            return await App.Database.database.Table<Category>().Where(x => x.Name == name).FirstOrDefaultAsync();
         }
     }
 

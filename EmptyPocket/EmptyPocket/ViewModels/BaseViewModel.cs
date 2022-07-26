@@ -13,9 +13,9 @@ namespace EmptyPocket.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public IDataStore<Transaction> TransDataStore => DependencyService.Get<IDataStore<Transaction>>();
-        public IDataStore<Category> CatDataStore => DependencyService.Get<IDataStore<Category>>();
-        public IDataStore<Wallet> WalDataStore => DependencyService.Get<IDataStore<Wallet>>();
+        public ITransactionStore TransDataStore => DependencyService.Get<ITransactionStore>();
+        public ICategoriesStore CatDataStore => DependencyService.Get<ICategoriesStore>();
+        public IWalletsStore WalDataStore => DependencyService.Get<IWalletsStore>();
 
         bool isBusy = false;
         public bool IsBusy
@@ -38,7 +38,7 @@ namespace EmptyPocket.ViewModels
             try
             {
                 data.Clear();
-                var items = await dataStore.GetItemsAsync(true);
+                var items = await dataStore.GetAsync(true);
                 foreach (var item in items)
                 {
                     data.Add(item);

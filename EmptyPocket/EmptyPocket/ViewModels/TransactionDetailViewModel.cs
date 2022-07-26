@@ -64,7 +64,7 @@ namespace EmptyPocket.ViewModels
         {
             try
             {
-                var item = await TransDataStore.GetItemAsync(itemId);
+                var item = await TransDataStore.GetAsync(itemId);
                 Id = item.Id.ToString();
                 Category = item.Category;
                 Account = item.Account;

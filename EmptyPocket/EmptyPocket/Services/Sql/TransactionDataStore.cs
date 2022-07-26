@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EmptyPocket.Services
 {
-    public class TransactionDataStore : IDataStore<Transaction>
+    public class TransactionDataStore : ITransactionStore
     {
         public List<Transaction> items;
 
@@ -42,43 +42,24 @@ namespace EmptyPocket.Services
         }
 
 
-        public async Task<int> AddItemAsync(Transaction item)
+        public async Task UpsertAsync(Transaction transaction)
         {
-            //items.Add(item);
-
-            //return await Task.FromResult(true);
-            return await App.Database.database.InsertAsync(item);
+            await App.Database.database.InsertOrReplaceAsync(transaction);
         }
 
-        public async Task<int> UpdateItemAsync(Transaction item)
+        public async Task DeleteAsync(int id)
         {
-            //var oldItem = items.Where((Transaction arg) => arg.Id == item.Id).FirstOrDefault();
-            //items.Remove(oldItem);
-            //items.Add(item);
-
-            //return await Task.FromResult(true);
-            return await App.Database.database.UpdateAsync(item);
+            await App.Database.database.DeleteAsync<Transaction>(id);
         }
 
-        public async Task<int> DeleteItemAsync(Transaction item)
+        public async Task<Transaction> GetAsync(int id)
         {
-            //var oldItem = items.Where((Transaction arg) => arg.Id == id).FirstOrDefault();
-            //items.Remove(oldItem);
-
-            //return await Task.FromResult(true);
-            return await App.Database.database.DeleteAsync(item);
-        }
-
-        public async Task<Transaction> GetItemAsync(int id)
-        {
-            //return await Task.FromResult(items.FirstOrDefault(s => s.Id == id));
             return await App.Database.database.Table<Transaction>().Where(i => i.Id == id).FirstOrDefaultAsync();
         }
 
-        public async Task<List<Transaction>> GetItemsAsync(bool forceRefresh = false)
+        public async Task<IEnumerable<Transaction>> GetAsync(bool forceRefresh = false)
         {
-            //return await Task.FromResult(items);
-            return await App.Database.database.Table<Transaction>().OrderByDescending(x => x.Date).ToListAsync();
+            return await App.Database.database.Table<Transaction>().ToListAsync();
         }
     }
 }
